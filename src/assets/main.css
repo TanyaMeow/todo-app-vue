@@ -1,0 +1,19 @@
+body {
+    margin: 0 auto;
+    height: 100%;
+    background-color: #1a7967;
+    display: flex;
+    justify-content: center;
+}
+
+#app {
+    border-radius: 10px;
+    display: flex;
+    background-color: #DCF5E6;
+    width: 800px;
+    height: 100%;
+    margin: 20px 0;
+    padding: 10px 0;
+    flex-direction: column;
+    align-items: center;
+}
