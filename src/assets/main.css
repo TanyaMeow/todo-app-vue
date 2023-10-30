@@ -1,9 +1,20 @@
+@font-face {
+    font-family: 'Nunito Light';
+    src: url("Nunito-Light.ttf");
+}
+
+@font-face {
+    font-family: 'Nunito Regular';
+    src: url("Nunito-Regular.ttf");
+}
+
 body {
     margin: 0 auto;
     height: 100%;
     background-color: #1a7967;
     display: flex;
     justify-content: center;
+    font-family: 'Nunito Light', sans-serif;
 }
 
 #app {
@@ -16,4 +27,23 @@ body {
     padding: 10px 0;
     flex-direction: column;
     align-items: center;
+}
+
+button {
+    width: 100px;
+    height: 40px;
+    background-color: #3b3b5b;
+    color: aliceblue;
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #4b4b72;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+a {
+    color: #1a7967;
 }

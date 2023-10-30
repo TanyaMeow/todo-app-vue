@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 // @ts-ignore
 import NoteView from "@/views/NoteView.vue";
+import Note from "@/components/Note.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -14,10 +15,12 @@ const router = createRouter({
     },
     {
       path: '/note',
-      name: 'note',
-      component: NoteView
-    }
-  ]
+      component: NoteView,
+      children: [{
+        path: '/:id',
+        component: Note
+      }]
+    }]
 })
 
 export default router
