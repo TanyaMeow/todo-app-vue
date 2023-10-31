@@ -1,13 +1,33 @@
 <script setup lang="ts">
 
 import Note from "@/components/Note.vue";
-import {ref} from "vue";
+import {provide, ref} from "vue";
 import {NotesStore} from "@/stores/Notes";
+import {InitialStore, TaskInterface} from "@/stores/InitialNote";
+import {useRoute} from "vue-router";
 
 const addNote = NotesStore().addNote;
-let note = ref('');
-function updateNote(noten: string) {
-  note.value = noten;
+const notes = NotesStore().notes;
+
+let editNote = ref({})
+const id = useRoute().params.id
+
+if (id) {
+  editNote.value = NotesStore().notes.find((note) => {
+    return note.id === id;
+  });
+}
+
+editNote.value = {
+  id: null,
+  title: '',
+  tasks: []
+}
+
+provide('editNote', editNote)
+
+function updateNote(title: string) {
+  editNote.value.title = title;
 }
 
 </script>
@@ -19,7 +39,7 @@ function updateNote(noten: string) {
     </keep-alive>
   </div>
   <div class="functional_note">
-    <button @click="addNote({ id: 2, title: note, tasks: [] })">Сохранить</button>
+    <router-link to="/"><button @click="addNote({ id: editNote.id, title: editNote.title, tasks: editNote.tasks })">Сохранить</button></router-link>
     <button>Отмена</button>
   </div>
 

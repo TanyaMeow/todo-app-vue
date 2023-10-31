@@ -2,13 +2,11 @@
 
 import {NotesStore} from "@/stores/Notes";
 import {ref} from "vue";
+import {useRoute} from "vue-router";
 
 const notes = NotesStore().notes;
-const tasks = NotesStore().notes[0].tasks;
 
 const open = ref(false);
-
-console.log(tasks)
 
 </script>
 
@@ -17,21 +15,24 @@ console.log(tasks)
     <div class="block_notes">
       <div>
         <h1 class="title_todo">ToDo</h1>
-        <div class="container_notes" v-for="note of notes">
-          <div class="container_note">
-            <div class="note_functional">
-              <div class="head">
-                <h1 class="title_note">{{note.title}}</h1>
-                <img class="but" v-bind:class="{active: open}" @click="open = true" src="public/icons/caret_down.svg" alt="">
+        <div class="notes_block">
+          <p>Notes</p>
+          <div class="container_notes" v-for="note of notes">
+              <div class="container_note">
+                <div class="note_functional">
+                  <div class="head">
+                    <h1 class="title_note">{{note.title}}</h1>
+                    <img class="but" v-bind:class="{active: open}" @click="open = true" src="public/icons/caret_down.svg" alt="">
+                  </div>
+                  <div class="functional">
+                    <router-link :to="{name: 'note', params: {id: note.id}}"><img src="public/icons/edit.svg" title="изменить заметку" alt="изменить заметку"/></router-link>
+                    <img src="public/icons/delete.svg" title="удалить заметку" alt="удалить заметку"/>
+                  </div>
+                </div>
+                <div class="container_tasks" v-for="task of note.tasks">
+                  <div class="todo">{{task.title}}</div>
+                </div>
               </div>
-              <div class="functional">
-                <img src="public/icons/edit.svg" title="изменить заметку" alt="изменить заметку"/>
-                <img src="public/icons/delete.svg" title="удалить заметку" alt="удалить заметку"/>
-              </div>
-            </div>
-            <div class="container_tasks" v-for="task of tasks">
-              <div class="todo">{{task.title}}</div>
-            </div>
           </div>
         </div>
         <div class="func">
@@ -44,6 +45,18 @@ console.log(tasks)
 
 
 <style scoped>
+
+p {
+  color: #3b3b5b;
+  font-family: 'Nunito Regular', sans-serif;
+  text-transform: uppercase;
+  border-bottom: 1px solid #3b3b5b;
+  font-weight: 600;
+}
+
+.functional {
+  display: flex;
+}
 
 a {
   display: flex;
@@ -75,6 +88,7 @@ main {
   background-color: #1a796770;
   border-radius: 5px;
   padding: 0 10px;
+  width: 100%;
 }
 
 .container_notes {

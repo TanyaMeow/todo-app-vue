@@ -13,7 +13,7 @@ defineEmits(['update:updateNote']);
 
 <template>
   <div class="note_title">
-    <input class="title_note" type="text" v-model="modelValue" @input="$emit('updateNote', modelValue)">
+    <p>Title note: </p><input class="title_note" type="text" v-model="modelValue" @input="$emit('updateNote', modelValue)">
   </div>
   <router-view />
   <ContainerTasks />

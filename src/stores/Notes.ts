@@ -1,10 +1,10 @@
 import {defineStore} from "pinia";
-import {computed, ref} from "vue";
+import {ref} from "vue";
 
 interface NoteInterface {
     id: number,
     title: string,
-    tasks: TaskInterface[]
+    tasks: TaskInterface[] | []
 }
 
 export interface TaskInterface {
@@ -14,27 +14,40 @@ export interface TaskInterface {
 }
 
 export const NotesStore = defineStore('notes', () => {
-    const notes = ref([{
-        id: 1,
-        title: 'Note 1',
-        tasks: [{
-            title: 'Task1',
-            id: 1,
-            completed: false
-        }]
-    }]);
+    const notes = ref([]);
 
     function addNote(note: NoteInterface) {
+        note.id = notes.value.length + 1;
         notes.value.push(note);
     }
 
-    const addTask = ((task:TaskInterface, id: number) => {
+    function updateNote(note) {
+
+    }
+
+    const deleteTask = (idTask: number, idNote: number) => {
         const note = notes.value.find((note) => {
-            return note.id === id;
+            return note.id === idNote;
         })
 
-        return note.tasks.push(task);
-    })
+        note?.tasks.find((task, index) => {
+            if (task.id === idTask) {
+                note?.tasks.splice(index, 1);
+            }
+        })
+    };
 
-    return {notes, addNote, addTask}
+    const changeTask = (title:string, taskId: number, noteId: number) => {
+        const note = notes.value.find((note) => {
+            return note.id === noteId;
+        })
+
+        note?.tasks.find((task) => {
+            if (task.id === taskId) {
+                task.title = title;
+            }
+        })
+    }
+
+    return {notes, addNote, deleteTask, changeTask}
 })

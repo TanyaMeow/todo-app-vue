@@ -1,25 +1,41 @@
 <script setup lang="ts">
 
 import {NotesStore} from "@/stores/Notes";
-import {ref} from "vue";
-import {storeToRefs} from "pinia";
+import {inject, ref} from "vue";
+import {InitialStore} from "@/stores/InitialNote";
+import {useRoute} from "vue-router";
 
-const Note = NotesStore().addTask;
-const tasks = ref(NotesStore().notes[0].tasks);
+const deleteTask = NotesStore().deleteTask;
+const changeTask = NotesStore().changeTask;
+
+const titleTask = ref('');
+const active =ref(false);
+const title = ref('');
+
+const editNote = inject('editNote');
+
+function addTask(task) {
+  editNote.value.tasks.push(task);
+}
+
+let tasks = editNote.value.tasks;
 
 </script>
 
 <template>
   <div class="todo_block">
+    <p class="todo_title">Tasks</p>
     <div class="todo" v-for="task of tasks">
       <div class="check"><input type="checkbox"/>{{task.title}}</div>
       <div class="functional_task">
-        <img src="public/icons/edit_task.svg" title="изменить задачу" alt="">
-        <img src="public/icons/delete_forever.svg" title="удалить задачу" alt="">
+        <img src="/icons/edit_task.svg" title="изменить задачу" alt="">
+        <img src="/icons/delete_forever.svg" title="удалить задачу" alt="">
       </div>
+      <input class="non" v-bind:class="{active: active}" type="text" v-model="title">
     </div>
     <div class="add_todo">
-      <button @click="Note({title: `Task2`, id: 2, completed: false}, 1)">Добавить задачу</button>
+      <input type="text" v-model="titleTask">
+      <button @click="addTask({id: tasks.length + 1, title: titleTask, completed: false})">Добавить задачу</button>
     </div>
   </div>
 </template>
@@ -27,6 +43,26 @@ const tasks = ref(NotesStore().notes[0].tasks);
 <style scoped>
 img {
   width: 20px;
+}
+
+.non {
+  display: none;
+}
+
+.active {
+  display: flex;
+}
+
+.active {
+  color: red;
+}
+
+.todo_title {
+  color: #3b3b5b;
+  font-family: 'Nunito Regular', sans-serif;
+  text-transform: uppercase;
+  border-bottom: 1px solid #3b3b5b;
+  font-weight: 600;
 }
 
 .todo_block {
