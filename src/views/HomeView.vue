@@ -83,11 +83,14 @@ main {
   font-family: 'Nunito Regular', sans-serif;
 }
 
+.container_tasks {
+  padding-left: 10px;
+}
+
 .container_note {
   margin-top: 10px;
   background-color: #1a796770;
   border-radius: 5px;
-  padding: 0 10px;
   width: 100%;
 }
 
@@ -103,6 +106,7 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 10px;
 }
 
 .func {

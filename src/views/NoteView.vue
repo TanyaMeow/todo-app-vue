@@ -2,44 +2,53 @@
 
 import Note from "@/components/Note.vue";
 import {provide, ref} from "vue";
-import {NotesStore} from "@/stores/Notes";
+import {NoteInterface, NotesStore} from "@/stores/Notes";
 import {InitialStore, TaskInterface} from "@/stores/InitialNote";
 import {useRoute} from "vue-router";
 
 const addNote = NotesStore().addNote;
+const updateNote = NotesStore().updateNote;
 const notes = NotesStore().notes;
 
-let editNote = ref({})
-const id = useRoute().params.id
-
-if (id) {
-  editNote.value = NotesStore().notes.find((note) => {
-    return note.id === id;
-  });
-}
-
-editNote.value = {
+let editNote = ref({
   id: null,
   title: '',
   tasks: []
+});
+
+const id = useRoute().params.id;
+
+if (id) {
+  editNote.value = notes.find((note) => {
+    return note.id === Number(id);
+  });
 }
 
-provide('editNote', editNote)
-
-function updateNote(title: string) {
+function setTitle(title: string) {
   editNote.value.title = title;
 }
+
+function setNote() {
+  if (editNote.value.id) {
+    updateNote({...editNote.value});
+    return;
+  }
+
+  addNote({...editNote.value});
+}
+
+provide('editNote', editNote);
 
 </script>
 
 <template>
   <div class="note">
     <keep-alive>
-      <Note v-on:updateNote="updateNote" />
+      <Note v-on:setTitle="setTitle" />
     </keep-alive>
   </div>
   <div class="functional_note">
-    <router-link to="/"><button @click="addNote({ id: editNote.id, title: editNote.title, tasks: editNote.tasks })">Сохранить</button></router-link>
+    <button @click="setNote">Сохранить</button>
     <button>Отмена</button>
   </div>
 

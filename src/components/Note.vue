@@ -7,13 +7,13 @@ const Notes = NotesStore();
 const modelValue = ref('');
 
 defineProps(['modelValue']);
-defineEmits(['update:updateNote']);
+defineEmits(['update:setTitle']);
 
 </script>
 
 <template>
   <div class="note_title">
-    <p>Title note: </p><input class="title_note" type="text" v-model="modelValue" @input="$emit('updateNote', modelValue)">
+    <p>Title note: </p><input class="title_note" type="text" v-model="modelValue" @input="$emit('setTitle', modelValue)">
   </div>
   <router-view />
   <ContainerTasks />
