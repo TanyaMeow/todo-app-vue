@@ -19,6 +19,8 @@ export const NotesStore = defineStore('notes', () => {
     function addNote(note: NoteInterface) {
         note.id = notes.value.length + 1;
         notes.value.push(note);
+
+        return note.id;
     }
 
     function updateNote(noteN: NoteInterface) {
@@ -29,18 +31,6 @@ export const NotesStore = defineStore('notes', () => {
             return note;
         })
     }
-
-    const deleteTask = (idTask: number, idNote: number) => {
-        const note = notes.value.find((note) => {
-            return note.id === idNote;
-        })
-
-        note?.tasks.find((task, index) => {
-            if (task.id === idTask) {
-                note?.tasks.splice(index, 1);
-            }
-        })
-    };
 
     const changeTask = (title:string, taskId: number, noteId: number) => {
         const note = notes.value.find((note) => {
@@ -54,5 +44,5 @@ export const NotesStore = defineStore('notes', () => {
         })
     }
 
-    return {notes, addNote, deleteTask, changeTask, updateNote}
+    return {notes, addNote, changeTask, updateNote}
 })

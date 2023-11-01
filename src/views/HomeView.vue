@@ -2,7 +2,7 @@
 
 import {NotesStore} from "@/stores/Notes";
 import {ref} from "vue";
-import {useRoute} from "vue-router";
+import Popup from "@/components/Popup.vue";
 
 const notes = NotesStore().notes;
 
@@ -12,6 +12,7 @@ const open = ref(false);
 
 <template>
   <main>
+    <Popup/>
     <div class="block_notes">
       <div>
         <h1 class="title_todo">ToDo</h1>

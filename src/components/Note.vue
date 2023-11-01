@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import ContainerTasks from "@/components/ContainerTasks.vue";
-import {NotesStore} from "@/stores/Notes";
 import {ref} from "vue";
 
-const Notes = NotesStore();
 const modelValue = ref('');
 
 defineProps(['modelValue']);

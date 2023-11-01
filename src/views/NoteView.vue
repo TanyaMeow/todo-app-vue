@@ -1,14 +1,20 @@
 <script setup lang="ts">
 
 import Note from "@/components/Note.vue";
-import {provide, ref} from "vue";
+import {onRenderTriggered, provide, ref, watchEffect} from "vue";
 import {NoteInterface, NotesStore} from "@/stores/Notes";
 import {InitialStore, TaskInterface} from "@/stores/InitialNote";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
+import router from "@/router";
+
+console.log('render 1')
 
 const addNote = NotesStore().addNote;
 const updateNote = NotesStore().updateNote;
 const notes = NotesStore().notes;
+const route = useRoute();
+let id: any;
+
 
 let editNote = ref({
   id: null,
@@ -16,13 +22,17 @@ let editNote = ref({
   tasks: []
 });
 
-const id = useRoute().params.id;
+watchEffect(() => {
 
-if (id) {
-  editNote.value = notes.find((note) => {
-    return note.id === Number(id);
-  });
-}
+  id = route.params.id;
+
+  if (id) {
+    editNote.value = notes.find((note) => {
+      console.log('render 2')
+      return note.id === Number(id);
+    });
+  }
+})
 
 function setTitle(title: string) {
   editNote.value.title = title;
@@ -34,7 +44,9 @@ function setNote() {
     return;
   }
 
-  addNote({...editNote.value});
+  const idNote = addNote({...editNote.value});
+
+  router.push({path: `/note/${idNote}`});
 }
 
 provide('editNote', editNote);
