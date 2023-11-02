@@ -3,7 +3,7 @@ import Popup from "@/components/Popup.vue";
 
 import {NotesStore} from "@/stores/Notes";
 import {provide, ref} from "vue";
-import {showPopup, usePopupStore} from "@/stores/PopupStore";
+import {usePopupStore} from "@/stores/PopupStore";
 
 const notes = NotesStore().notes;
 const deleteNote = NotesStore().deleteNote;
@@ -31,7 +31,7 @@ const open = ref(false);
                   </div>
                   <div class="functional">
                     <router-link :to="{name: 'note', params: {id: note.id}}"><img src="public/icons/edit.svg" title="изменить заметку" alt="изменить заметку"/></router-link>
-                    <img src="public/icons/delete.svg" title="удалить заметку" alt="удалить заметку" @click="showPopup(() => deleteNote(note.id))"/>
+                    <img src="public/icons/delete.svg" title="удалить заметку" alt="удалить заметку" @click="popupStore.showPopup(() => deleteNote(note.id))"/>
                   </div>
                 </div>
                 <div class="container_tasks" v-for="task of note.tasks">
