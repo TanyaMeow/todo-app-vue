@@ -2,7 +2,7 @@
 import Popup from "@/components/Popup.vue";
 
 import {NotesStore} from "@/stores/Notes";
-import {provide, ref} from "vue";
+import {ref} from "vue";
 import {usePopupStore} from "@/stores/PopupStore";
 
 const notes = NotesStore().notes;
