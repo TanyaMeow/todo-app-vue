@@ -1,5 +1,6 @@
 import {defineStore} from "pinia";
 import {ref} from "vue";
+import Note from "@/components/Note.vue";
 
 export interface NoteInterface {
     id: number,
@@ -32,17 +33,13 @@ export const NotesStore = defineStore('notes', () => {
         })
     }
 
-    const changeTask = (title:string, taskId: number, noteId: number) => {
-        const note = notes.value.find((note) => {
-            return note.id === noteId;
-        })
-
-        note?.tasks.find((task) => {
-            if (task.id === taskId) {
-                task.title = title;
+    function deleteNote(noteId: number) {
+        notes.value.find((note: NoteInterface, index: number) => {
+            if (note.id === noteId) {
+                notes.value.splice(index, 1);
             }
         })
     }
 
-    return {notes, addNote, changeTask, updateNote}
+    return {notes, addNote, updateNote, deleteNote}
 })

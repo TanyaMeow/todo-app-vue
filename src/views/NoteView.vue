@@ -6,15 +6,13 @@ import {NoteInterface, NotesStore} from "@/stores/Notes";
 import {InitialStore, TaskInterface} from "@/stores/InitialNote";
 import {useRoute, useRouter} from "vue-router";
 import router from "@/router";
-
-console.log('render 1')
+import Popup from "@/components/Popup.vue";
 
 const addNote = NotesStore().addNote;
 const updateNote = NotesStore().updateNote;
 const notes = NotesStore().notes;
 const route = useRoute();
 let id: any;
-
 
 let editNote = ref({
   id: null,
@@ -28,7 +26,6 @@ watchEffect(() => {
 
   if (id) {
     editNote.value = notes.find((note) => {
-      console.log('render 2')
       return note.id === Number(id);
     });
   }
@@ -54,6 +51,7 @@ provide('editNote', editNote);
 </script>
 
 <template>
+  <Popup/>
   <div class="note">
     <keep-alive>
       <Note v-on:setTitle="setTitle" />
