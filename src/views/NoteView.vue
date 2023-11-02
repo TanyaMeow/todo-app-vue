@@ -7,6 +7,9 @@ import {InitialStore, TaskInterface} from "@/stores/InitialNote";
 import {useRoute, useRouter} from "vue-router";
 import router from "@/router";
 import Popup from "@/components/Popup.vue";
+import {usePopupStore} from "@/stores/PopupStore";
+
+const popupStore = usePopupStore();
 
 const addNote = NotesStore().addNote;
 const updateNote = NotesStore().updateNote;
@@ -59,7 +62,7 @@ provide('editNote', editNote);
   </div>
   <div class="functional_note">
     <button @click="setNote">Сохранить</button>
-    <button>Отмена</button>
+    <button @click="popupStore.showPopup(() => router.push({path: `/`}))">Отмена</button>
   </div>
 
   <div class="history">

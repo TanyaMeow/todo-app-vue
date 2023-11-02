@@ -3,11 +3,11 @@ import {ref} from "vue";
 
 export const usePopupStore = defineStore('popup', () => {
     const onOK = ref(() => {});
-    const show = ref(true);
+    const show = ref(false);
 
     function showPopup(callback) {
         onOK.value = callback;
-        show.value = false;
+        show.value = true;
     }
 
     return {onOK, show, showPopup}

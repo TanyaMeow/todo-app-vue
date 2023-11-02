@@ -7,13 +7,13 @@ const popupStore = usePopupStore();
 </script>
 
 <template>
-  <div :class="{open: popupStore.show}" class="popup_container">
+  <div v-show="popupStore.show" class="popup_container">
     <div class="line"></div>
     <div class="popup_block">
       <h1 class="popup_title">Вы уверены?</h1>
       <div class="popup_container_button">
-        <button class="consent" @click="popupStore.onOK(); popupStore.show = true">ОК</button>
-        <button class="cancel" @click="popupStore.show = true">ОТМЕНА</button>
+        <button class="consent" @click="popupStore.onOK(); popupStore.show = false">ОК</button>
+        <button class="cancel" @click="popupStore.show = false">ОТМЕНА</button>
       </div>
     </div>
   </div>
