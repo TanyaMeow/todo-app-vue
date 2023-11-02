@@ -32,11 +32,16 @@ watchEffect(() => {
       return note.id === Number(id);
     });
   }
-})
+});
 
 function setTitle(title: string) {
   editNote.value.title = title;
 }
+
+provide('setTitle', setTitle);
+
+const titleEdit = ref(editNote.value.title);
+provide('title', titleEdit);
 
 function setNote() {
   if (editNote.value.id) {
@@ -57,7 +62,7 @@ provide('editNote', editNote);
   <Popup/>
   <div class="note">
     <keep-alive>
-      <Note v-on:setTitle="setTitle" />
+      <Note />
     </keep-alive>
   </div>
   <div class="functional_note">
