@@ -19,19 +19,27 @@ const setTitle = inject('setTitle');
 .title_change {
   font-size: 18px;
   margin: 0 10px 0 0;
+  font-family: 'Nunito Regular', sans-serif;
+  color: #1d1d51;
 }
   .title_note {
+    background: transparent;
+    border: transparent;
     font-family: 'Nunito Regular', sans-serif;
     width: 200px;
     height: 40px;
     font-size: 26px;
-    border: 1px solid #55a38d;
-    border-radius: 5px;
     padding: 0 5px;
     text-align: center;
   }
 
+  .title_note:focus {
+    outline: none;
+    border-bottom: 1px solid #1c754e;
+  }
+
   .note_title {
+    height: 41px;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -15,6 +15,8 @@ const addNote = NotesStore().addNote;
 const updateNote = NotesStore().updateNote;
 const notes = NotesStore().notes;
 const route = useRoute();
+const open = ref(false);
+
 let id: any;
 
 let editNote = ref({
@@ -66,17 +68,21 @@ provide('editNote', editNote);
     </keep-alive>
   </div>
   <div class="functional_note">
-    <button @click="setNote">Сохранить</button>
+    <button @click="setNote(); open = true">Сохранить</button>
     <button @click="popupStore.showPopup(() => router.push({path: `/`}))">Отмена</button>
   </div>
 
-  <div class="history">
-    <img class="undo" src="/icons/undo.svg" alt="">
-    <img class="redo" src="/icons/undo.svg" alt="">
+  <div v-show="open" class="history">
+    <img class="undo" src="/icons/undo.svg" title="отменить внесенное изменение" alt="">
+    <img class="redo" src="/icons/undo.svg" title="повторить отмененное изменение" alt="">
   </div>
 </template>
 
 <style scoped>
+img {
+  cursor: pointer;
+}
+
   .note {
     display: flex;
     flex-direction: column;
@@ -84,7 +90,7 @@ provide('editNote', editNote);
     background-color: #1a796770;
     width: 700px;
     border-radius: 10px;
-    margin-top: 40px;
+    margin-top: 30px;
   }
 
   .functional_note {
@@ -101,6 +107,5 @@ provide('editNote', editNote);
 
   .history {
     margin-top: 30px;
-    display: none;
   }
 </style>

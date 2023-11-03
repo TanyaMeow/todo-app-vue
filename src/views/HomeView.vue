@@ -27,15 +27,15 @@ const open = ref(false);
                 <div class="note_functional">
                   <div class="head">
                     <h1 class="title_note">{{note.title}}</h1>
-                    <img class="but" v-bind:class="{active: open}" @click="open = true" src="public/icons/caret_down.svg" alt="">
+                    <img class="but" @click="open ? open = false : open = true" src="public/icons/caret_down.svg" alt="">
                   </div>
                   <div class="functional">
                     <router-link :to="{name: 'note', params: {id: note.id}}"><img src="public/icons/edit.svg" title="изменить заметку" alt="изменить заметку"/></router-link>
-                    <img src="public/icons/delete.svg" title="удалить заметку" alt="удалить заметку" @click="popupStore.showPopup(() => deleteNote(note.id))"/>
+                    <img class="delete" src="public/icons/delete.svg" title="удалить заметку" alt="удалить заметку" @click="popupStore.showPopup(() => deleteNote(note.id))"/>
                   </div>
                 </div>
                 <div class="container_tasks" v-for="task of note.tasks">
-                  <div class="todo">{{task.title}}</div>
+                  <div class="todo" :class="{active: task.completed}">{{task.title}}</div>
                 </div>
               </div>
           </div>
@@ -74,6 +74,15 @@ main {
   justify-content: center;
 }
 
+.delete {
+  cursor: pointer;
+}
+
+.active {
+  color: #77819b;
+  text-decoration: line-through;
+}
+
 .block_notes {
   width: 700px;
 }
@@ -90,6 +99,7 @@ main {
 
 .container_tasks {
   padding-left: 10px;
+  transition: 10s;
 }
 
 .container_note {
