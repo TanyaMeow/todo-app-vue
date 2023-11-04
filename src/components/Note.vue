@@ -2,14 +2,13 @@
 import ContainerTasks from "@/components/ContainerTasks.vue";
 import {inject} from "vue";
 
-const modelValue = inject('title');
-const setTitle = inject('setTitle');
+const editNote = inject('editNote');
 
 </script>
 
 <template>
   <div class="note_title">
-    <p class="title_change">Title note: </p><input class="title_note" type="text" v-model="modelValue" @input="setTitle(modelValue)">
+    <p class="title_change">Title note: </p><input class="title_note" type="text" v-model="editNote.title">
   </div>
   <router-view />
   <ContainerTasks />

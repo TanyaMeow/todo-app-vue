@@ -30,6 +30,7 @@ const popupStore = usePopupStore();
   position: absolute;
   width: 400px;
   background-color: #fefff7;
+  z-index: 1;
 }
 
 .consent {

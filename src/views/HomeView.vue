@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import Popup from "@/components/Popup.vue";
 
-import {NotesStore} from "@/stores/Notes";
+import {useNotesStore} from "@/stores/Notes";
 import {ref} from "vue";
 import {usePopupStore} from "@/stores/PopupStore";
 
-const notes = NotesStore().notes;
-const deleteNote = NotesStore().deleteNote;
+const notes = useNotesStore().notes;
+const deleteNote = useNotesStore().deleteNote;
 
 const popupStore = usePopupStore();
 

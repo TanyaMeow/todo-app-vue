@@ -14,7 +14,7 @@ export interface TaskInterface {
     completed: boolean
 }
 
-export const NotesStore = defineStore('notes', () => {
+export const useNotesStore = defineStore('notes', () => {
     const notes = ref(getNotes());
 
     function getNotes() {
