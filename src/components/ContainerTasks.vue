@@ -3,7 +3,7 @@
 import {TaskInterface} from "@/stores/Notes";
 import {inject, ref} from "vue";
 
-const titleTask = ref('');
+const title = ref('');
 
 const editNote = inject('editNote');
 
@@ -11,7 +11,7 @@ function addTask(task: TaskInterface) {
   editNote.value.tasks.push(task);
 }
 function deleteTask(taskId: number) {
-  editNote.value.tasks = editNote.value.tasks.filter((task: TaskInterface, index: number) => task.id !== taskId)
+  editNote.value.tasks = editNote.value.tasks.filter((task: TaskInterface) => task.id !== taskId)
 }
 function changeTask(title: string, taskId: number) {
   editNote.value.tasks = editNote.value.tasks.map((task: TaskInterface) => {
@@ -29,8 +29,8 @@ function changeTask(title: string, taskId: number) {
     <div class="add_todo-wat">
       <p class="todo_title">Tasks</p>
       <div class="add_todo">
-        <input class="add_todo-input" type="text" v-model="titleTask">
-        <button class="add_todo-button" @click="addTask({id: editNote.tasks.length + 1, title: titleTask, completed: false})">Добавить задачу</button>
+        <input class="add_todo-input" type="text" v-model="title">
+        <button class="add_todo-button" @click="addTask({id: editNote.tasks.length + 1, title: title, completed: false})">Добавить задачу</button>
       </div>
     </div>
     <div class="container" v-for="task of editNote.tasks">

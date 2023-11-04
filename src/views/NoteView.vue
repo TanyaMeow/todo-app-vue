@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import Note from "@/components/Note.vue";
-import {provide, ref, watchEffect} from "vue";
+import {provide, ref} from "vue";
 import {NoteInterface, useNotesStore} from "@/stores/Notes";
 import {useRoute} from "vue-router";
 import router from "@/router";
@@ -15,37 +15,39 @@ const route = useRoute();
 const id = route.params.id;
 const open = ref(false);
 
+const undoStack: NoteInterface[] = [];
+const redoStack: NoteInterface[] = [];
+
 function copyNote(note: NoteInterface) {
   const tasks = note.tasks.map(task => ({...task}));
 
   return {...note, tasks: tasks}
 }
 
-function getUndoNote() {
+function undo() {
   if (undoStack.length === 0) {
     return;
   }
 
-  const newNote = undoStack.pop();
+  const currentNote: NoteInterface = undoStack.pop();
 
-  editNote.value = copyNote(newNote);
+  editNote.value = copyNote(currentNote);
 
-  console.log('redoStack',redoStack)
+  console.log('redoStack',redoStack);
 }
-
-function getRedoNote() {
+function redo() {
   if (redoStack.length === 0) {
     return;
   }
 
-  const newNote = redoStack.pop();
+  const currentNote: NoteInterface = redoStack.pop();
 
-  editNote.value = copyNote(newNote);
+  editNote.value = copyNote(currentNote);
 
-  console.log('undoStack',redoStack)
+  console.log('undoStack',redoStack);
 }
 
-let editNote = ref({
+let editNote = ref<NoteInterface>({
   id: null,
   title: '',
   tasks: []
@@ -56,12 +58,9 @@ if (id) {
   editNote.value = copyNote(currentNote);
 }
 
-const undoStack: NoteInterface[] = [];
-const redoStack: NoteInterface[] = [];
-
 function setNote() {
   if (editNote.value.id) {
-    const currentNote = notesStore.notes.find(note => note.id === editNote.value.id);
+    const currentNote = notesStore.notes.find((note: NoteInterface) => note.id === editNote.value.id);
     undoStack.push(copyNote(currentNote));
     notesStore.updateNote(copyNote(editNote.value));
     redoStack.push(copyNote(editNote.value));
@@ -69,9 +68,9 @@ function setNote() {
     return;
   }
 
-  const idNote = notesStore.addNote(copyNote(editNote.value));
-  editNote.value.id = idNote;
-  router.push({path: `/note/${idNote}`});
+  const currentId = notesStore.addNote(copyNote(editNote.value));
+  editNote.value.id = currentId;
+  router.push({path: `/note/${currentId}`});
 }
 
 provide('editNote', editNote);
@@ -90,9 +89,9 @@ provide('editNote', editNote);
     <button @click="popupStore.showPopup(() => router.push({path: `/`}))">Отмена</button>
   </div>
 
-  <div class="history">
-    <img class="undo" src="/icons/undo.svg" title="отменить внесенное изменение" @click="getUndoNote" alt="">
-    <img class="redo" src="/icons/undo.svg" title="повторить отмененное изменение" @click="getRedoNote" alt="">
+  <div v-show="open" class="history">
+    <img class="undo" src="/icons/undo.svg" title="отменить внесенное изменение" @click="undo" alt="">
+    <img class="redo" src="/icons/undo.svg" title="повторить отмененное изменение" @click="redo" alt="">
   </div>
 </template>
 

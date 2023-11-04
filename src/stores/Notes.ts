@@ -1,9 +1,8 @@
 import {defineStore} from "pinia";
 import {ref} from "vue";
-import Note from "@/components/Note.vue";
 
 export interface NoteInterface {
-    id: number,
+    id: number | null,
     title: string,
     tasks: TaskInterface[] | []
 }
@@ -33,10 +32,10 @@ export const useNotesStore = defineStore('notes', () => {
         return note.id;
     }
 
-    function updateNote(noteN: NoteInterface) {
+    function updateNote(noteCreate: NoteInterface) {
         notes.value = notes.value.map((note: NoteInterface) => {
-            if (note.id === noteN.id) {
-                return noteN
+            if (note.id === noteCreate.id) {
+                return noteCreate;
             }
             return note;
         })
@@ -44,9 +43,9 @@ export const useNotesStore = defineStore('notes', () => {
         setNotes(notes.value);
     }
 
-    function deleteNote(noteId: number) {
+    function deleteNote(id: number) {
         notes.value.map((note: NoteInterface, index: number) => {
-            if (note.id === noteId) {
+            if (note.id === id) {
                 notes.value.splice(index, 1);
             }
         })

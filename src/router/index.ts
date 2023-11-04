@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-// @ts-ignore
 import NoteView from "@/views/NoteView.vue";
 import HomeView from "@/views/HomeView.vue";
 
@@ -20,6 +19,6 @@ const router = createRouter({
       path: '/note/:id',
       component:NoteView,
     }]
-})
+});
 
-export default router
+export default router;

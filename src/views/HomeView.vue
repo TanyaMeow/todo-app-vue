@@ -5,9 +5,7 @@ import {useNotesStore} from "@/stores/Notes";
 import {ref} from "vue";
 import {usePopupStore} from "@/stores/PopupStore";
 
-const notes = useNotesStore().notes;
-const deleteNote = useNotesStore().deleteNote;
-
+const notesStore = useNotesStore();
 const popupStore = usePopupStore();
 
 const open = ref(false);
@@ -22,16 +20,16 @@ const open = ref(false);
         <h1 class="title_todo">ToDo</h1>
         <div class="notes_block">
           <p>Notes</p>
-          <div class="container_notes" v-for="note of notes">
+          <div class="container_notes" v-for="note of notesStore.notes">
               <div class="container_note">
                 <div class="note_functional">
                   <div class="head">
                     <h1 class="title_note">{{note.title}}</h1>
-                    <img class="but" @click="open ? open = false : open = true" src="public/icons/caret_down.svg" alt="">
+                    <img class="arrow" @click="open ? open = false : open = true" src="public/icons/caret_down.svg" alt="">
                   </div>
                   <div class="functional">
                     <router-link :to="{name: 'note', params: {id: note.id}}"><img src="public/icons/edit.svg" title="изменить заметку" alt="изменить заметку"/></router-link>
-                    <img class="delete" src="public/icons/delete.svg" title="удалить заметку" alt="удалить заметку" @click="popupStore.showPopup(() => deleteNote(note.id))"/>
+                    <img class="delete" src="public/icons/delete.svg" title="удалить заметку" alt="удалить заметку" @click="popupStore.showPopup(() => notesStore.deleteNote(note.id))"/>
                   </div>
                 </div>
                 <div class="container_tasks" v-for="task of note.tasks">

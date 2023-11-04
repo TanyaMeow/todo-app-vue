@@ -20,9 +20,6 @@ const popupStore = usePopupStore();
 </template>
 
 <style scoped>
-.open {
-  display: none;
-}
 
 .popup_container {
   border: 1px solid #aa3131;
